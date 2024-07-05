@@ -11,6 +11,9 @@ importers:
       '@tauri-apps/api':
         specifier: '>=2.0.0-beta.6'
         version: 2.0.0-beta.13
+      valibot:
+        specifier: ^0.35.0
+        version: 0.35.0
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -222,6 +225,9 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  valibot@0.35.0:
+    resolution: {integrity: sha512-+i2aCRkReTrd5KBN/dW2BrPOvFnU5LXTV2xjZnjnqUIO8YUx6P2+MgRrkwF2FhkexgyKq/NIZdPdknhHf5A/Ww==}
+
   vscode-oniguruma@1.7.0:
     resolution: {integrity: sha512-L9WMGRfrjOhgHSdOYgCt/yRMsXzLDJSL7BPrOZt73gU0iWO4mpqzqQzOz5srxqTvMBaR0XZTSrVWo4j55Rc6cA==}
 
@@ -387,6 +393,8 @@ snapshots:
       typescript: 5.4.5
 
   typescript@5.4.5: {}
+
+  valibot@0.35.0: {}
 
   vscode-oniguruma@1.7.0: {}
 

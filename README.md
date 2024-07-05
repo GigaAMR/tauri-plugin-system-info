@@ -66,9 +66,9 @@ All TypeScript APIs can be found in [api.ts](./webview-src/api.ts).
 
 Return type of each API is added. The object structures can be found in [type.ts](./webview-src/type.ts).
 
-Zod was used to define type schema and infer TypeScript types. You can import the types exported from the npm package.
+Valibot was used to define type schema and infer TypeScript types. You can import the types exported from the npm package.
 
-The exported zod schemas can be used to parse data and make sure the data returned from rust APIs match the desired structure defined in schema.
+The exported Valibot schemas can be used to parse data and make sure the data returned from rust APIs match the desired structure defined in schema.
 
 ```typescript
 import {
