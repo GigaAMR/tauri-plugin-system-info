@@ -1,7 +1,26 @@
 'use strict';
 
 var core = require('@tauri-apps/api/core');
-var zod = require('zod');
+var v = require('valibot');
+
+function _interopNamespaceDefault(e) {
+    var n = Object.create(null);
+    if (e) {
+        Object.keys(e).forEach(function (k) {
+            if (k !== 'default') {
+                var d = Object.getOwnPropertyDescriptor(e, k);
+                Object.defineProperty(n, k, d.get ? d : {
+                    enumerable: true,
+                    get: function () { return e[k]; }
+                });
+            }
+        });
+    }
+    n.default = e;
+    return Object.freeze(n);
+}
+
+var v__namespace = /*#__PURE__*/_interopNamespaceDefault(v);
 
 function allSysInfo() {
     return core.invoke("plugin:system-info|all_sys_info");
@@ -84,174 +103,177 @@ function batteries() {
     return core.invoke("plugin:system-info|batteries");
 }
 
-const BatteryState = zod.z.enum([
-    "Unknown",
-    "Charging",
-    "Discharging",
-    "Empty",
-    "Full",
-]);
-const BatteryTechnology = zod.z.enum([
-    "Unknown",
-    "LithiumIon",
-    "LeadAcid",
-    "LithiumPolymer",
-    "NickelMetalHydride",
-    "NickelCadmium",
-    "NickelZinc",
-    "LithiumIronPhosphate",
-    "RechargeableAlkalineManganese",
-]);
-const Battery = zod.z.object({
-    state_of_charge: zod.z.number(),
-    energy: zod.z.number(),
-    energy_full: zod.z.number(),
-    energy_full_design: zod.z.number(),
-    energy_rate: zod.z
-        .number()
-        .describe("Amount of energy being drained from the battery."),
-    voltage: zod.z.number(),
-    state_of_health: zod.z.number(),
+var BatteryStateEnum;
+(function (BatteryStateEnum) {
+    BatteryStateEnum["Unknown"] = "Unknown";
+    BatteryStateEnum["Charging"] = "Charging";
+    BatteryStateEnum["Discharging"] = "Discharging";
+    BatteryStateEnum["Empty"] = "Empty";
+    BatteryStateEnum["Full"] = "Full";
+})(BatteryStateEnum || (BatteryStateEnum = {}));
+const BatteryState = v__namespace.enum(BatteryStateEnum);
+var BatteryTechnologyEnum;
+(function (BatteryTechnologyEnum) {
+    BatteryTechnologyEnum["Unknown"] = "Unknown";
+    BatteryTechnologyEnum["LithiumIon"] = "LithiumIon";
+    BatteryTechnologyEnum["LeadAcid"] = "LeadAcid";
+    BatteryTechnologyEnum["LithiumPolymer"] = "LithiumPolymer";
+    BatteryTechnologyEnum["NickelMetalHydride"] = "NickelMetalHydride";
+    BatteryTechnologyEnum["NickelCadmium"] = "NickelCadmium";
+    BatteryTechnologyEnum["NickelZinc"] = "NickelZinc";
+    BatteryTechnologyEnum["LithiumIronPhosphate"] = "LithiumIronPhosphate";
+    BatteryTechnologyEnum["RechargeableAlkalineManganese"] = "RechargeableAlkalineManganese";
+})(BatteryTechnologyEnum || (BatteryTechnologyEnum = {}));
+const BatteryTechnology = v__namespace.enum(BatteryTechnologyEnum);
+const Battery = v__namespace.object({
+    state_of_charge: v__namespace.number(),
+    energy: v__namespace.number(),
+    energy_full: v__namespace.number(),
+    energy_full_design: v__namespace.number(),
+    energy_rate: v__namespace.number(),
+    // .describe("Amount of energy being drained from the battery."),
+    voltage: v__namespace.number(),
+    state_of_health: v__namespace.number(),
     state: BatteryState,
     technology: BatteryTechnology,
-    temperature_kelin: zod.z.number().nullable(),
-    temperature_celsius: zod.z.number().nullable(),
-    temperature_fahrenheit: zod.z.number().nullable(),
-    cycle_count: zod.z.number().nullable(),
-    vendor: zod.z.string().nullable(),
-    model: zod.z.string().nullable(),
-    serial_number: zod.z.string().nullable(),
-    time_to_full: zod.z.number().nullable(),
-    time_to_empty: zod.z.number().nullable(),
+    temperature_kelin: v__namespace.nullable(v__namespace.number()),
+    temperature_celsius: v__namespace.nullable(v__namespace.number()),
+    temperature_fahrenheit: v__namespace.nullable(v__namespace.number()),
+    cycle_count: v__namespace.nullable(v__namespace.number()),
+    vendor: v__namespace.nullable(v__namespace.string()),
+    model: v__namespace.nullable(v__namespace.string()),
+    serial_number: v__namespace.nullable(v__namespace.string()),
+    time_to_full: v__namespace.nullable(v__namespace.number()),
+    time_to_empty: v__namespace.nullable(v__namespace.number())
 });
-const Batteries = Battery.array();
+const Batteries = v__namespace.array(Battery);
 // TODO: verify actual value returned from rust for "Unknown" enum
-// export const DiskKind = z.enum(["HDD", "SSD", "Unknown"]);
-const DiskKind = zod.z.union([
-    zod.z.literal("HDD"),
-    zod.z.literal("SSD"),
-    zod.z.object({
-        Unknown: zod.z.number(),
-    }),
+// export const DiskKind = v.enum(["HDD", "SSD", "Unknown"]);
+const DiskKind = v__namespace.union([
+    v__namespace.literal("HDD"),
+    v__namespace.literal("SSD"),
+    v__namespace.object({
+        Unknown: v__namespace.number()
+    })
 ]);
-const MacAddress = zod.z.number().array().length(6);
-const ProcessStatus = zod.z.union([
-    zod.z.literal("Idle"),
-    zod.z.literal("Run"),
-    zod.z.literal("Sleep"),
-    zod.z.literal("Stop"),
-    zod.z.literal("Zombie"),
-    zod.z.literal("Tracing"),
-    zod.z.literal("Dead"),
-    zod.z.literal("Wakekill"),
-    zod.z.literal("Waking"),
-    zod.z.literal("Parked"),
-    zod.z.literal("LockBlocked"),
-    zod.z.literal("UninterruptibleDiskSleep"),
-    zod.z.object({
-        Unknown: zod.z.number(),
-    }),
+const MacAddress = v__namespace.pipe(v__namespace.array(v__namespace.number()), v__namespace.length(6));
+const ProcessStatus = v__namespace.union([
+    v__namespace.literal("Idle"),
+    v__namespace.literal("Run"),
+    v__namespace.literal("Sleep"),
+    v__namespace.literal("Stop"),
+    v__namespace.literal("Zombie"),
+    v__namespace.literal("Tracing"),
+    v__namespace.literal("Dead"),
+    v__namespace.literal("Wakekill"),
+    v__namespace.literal("Waking"),
+    v__namespace.literal("Parked"),
+    v__namespace.literal("LockBlocked"),
+    v__namespace.literal("UninterruptibleDiskSleep"),
+    v__namespace.object({
+        Unknown: v__namespace.number()
+    })
 ]);
-const DiskUsage = zod.z.object({
-    total_written_bytes: zod.z.number(),
-    written_bytes: zod.z.number(),
-    total_read_bytes: zod.z.number(),
-    read_bytes: zod.z.number(),
+const DiskUsage = v__namespace.object({
+    total_written_bytes: v__namespace.number(),
+    written_bytes: v__namespace.number(),
+    total_read_bytes: v__namespace.number(),
+    read_bytes: v__namespace.number()
 });
-const Cpu = zod.z.object({
-    name: zod.z.string(),
-    frequency: zod.z.number(),
-    cpu_usage: zod.z.number(),
-    vendor_id: zod.z.string(),
-    brand: zod.z.string(),
+const Cpu = v__namespace.object({
+    name: v__namespace.string(),
+    frequency: v__namespace.number(),
+    cpu_usage: v__namespace.number(),
+    vendor_id: v__namespace.string(),
+    brand: v__namespace.string()
 });
-const Disk = zod.z.object({
+const Disk = v__namespace.object({
     kind: DiskKind,
-    name: zod.z.string(),
-    file_system: zod.z.string(),
-    mount_point: zod.z.string(),
-    total_space: zod.z.number(),
-    available_space: zod.z.number(),
-    is_removable: zod.z.boolean(),
+    name: v__namespace.string(),
+    file_system: v__namespace.string(),
+    mount_point: v__namespace.string(),
+    total_space: v__namespace.number(),
+    available_space: v__namespace.number(),
+    is_removable: v__namespace.boolean()
 });
-const Network = zod.z.object({
-    interface_name: zod.z.string(),
-    received: zod.z.number(),
-    total_received: zod.z.number(),
-    transmitted: zod.z.number(),
-    total_transmitted: zod.z.number(),
-    packets_received: zod.z.number(),
-    total_packets_received: zod.z.number(),
-    packets_transmitted: zod.z.number(),
-    total_packets_transmitted: zod.z.number(),
-    errors_on_received: zod.z.number(),
-    total_errors_on_received: zod.z.number(),
-    errors_on_transmitted: zod.z.number(),
-    total_errors_on_transmitted: zod.z.number(),
-    mac_address: zod.z.number().array(),
-    mac_address_str: zod.z.string(),
+const Network = v__namespace.object({
+    interface_name: v__namespace.string(),
+    received: v__namespace.number(),
+    total_received: v__namespace.number(),
+    transmitted: v__namespace.number(),
+    total_transmitted: v__namespace.number(),
+    packets_received: v__namespace.number(),
+    total_packets_received: v__namespace.number(),
+    packets_transmitted: v__namespace.number(),
+    total_packets_transmitted: v__namespace.number(),
+    errors_on_received: v__namespace.number(),
+    total_errors_on_received: v__namespace.number(),
+    errors_on_transmitted: v__namespace.number(),
+    total_errors_on_transmitted: v__namespace.number(),
+    mac_address: v__namespace.array(v__namespace.number()),
+    mac_address_str: v__namespace.string()
 });
-const Component = zod.z.object({
-    temperature: zod.z.number(),
-    max: zod.z.number(),
-    critical: zod.z.number().nullable(),
-    label: zod.z.string(),
+const Component = v__namespace.object({
+    temperature: v__namespace.number(),
+    max: v__namespace.number(),
+    critical: v__namespace.nullable(v__namespace.number()),
+    label: v__namespace.string()
 });
-const Process = zod.z.object({
-    name: zod.z.string(),
-    cmd: zod.z.string().array(),
-    exe: zod.z.string().nullable(),
-    pid: zod.z.number(),
-    environ: zod.z.string().array(),
-    cwd: zod.z.string().nullable(),
-    root: zod.z.string().nullable(),
-    memory: zod.z.number(),
-    virtual_memory: zod.z.number(),
-    parent: zod.z.number().nullable(),
+const Process = v__namespace.object({
+    name: v__namespace.string(),
+    cmd: v__namespace.array(v__namespace.string()),
+    exe: v__namespace.nullable(v__namespace.string()),
+    pid: v__namespace.number(),
+    environ: v__namespace.array(v__namespace.string()),
+    cwd: v__namespace.nullable(v__namespace.string()),
+    root: v__namespace.nullable(v__namespace.string()),
+    memory: v__namespace.number(),
+    virtual_memory: v__namespace.number(),
+    parent: v__namespace.nullable(v__namespace.number()),
     status: ProcessStatus,
-    start_time: zod.z.number(),
-    run_time: zod.z.number(),
-    cpu_usage: zod.z.number(),
+    start_time: v__namespace.number(),
+    run_time: v__namespace.number(),
+    cpu_usage: v__namespace.number(),
     disk_usage: DiskUsage,
-    user_id: zod.z.string().nullable(),
-    effective_user_id: zod.z.string().nullable(),
-    group_id: zod.z.string().nullable(),
-    effective_group_id: zod.z.string().nullable(),
-    session_id: zod.z.number().nullable(),
+    user_id: v__namespace.nullable(v__namespace.string()),
+    effective_user_id: v__namespace.nullable(v__namespace.string()),
+    group_id: v__namespace.nullable(v__namespace.string()),
+    effective_group_id: v__namespace.nullable(v__namespace.string()),
+    session_id: v__namespace.nullable(v__namespace.number())
 });
 // aggregate info
-const StaticInfo = zod.z.object({
-    hostname: zod.z.string().nullable(),
-    kernel_version: zod.z.string().nullable(),
-    os_version: zod.z.string().nullable(),
-    name: zod.z.string().nullable(),
+const StaticInfo = v__namespace.object({
+    hostname: v__namespace.nullable(v__namespace.string()),
+    kernel_version: v__namespace.nullable(v__namespace.string()),
+    os_version: v__namespace.nullable(v__namespace.string()),
+    name: v__namespace.nullable(v__namespace.string())
 });
-const MemoryInfo = zod.z.object({
-    total_memory: zod.z.number(),
-    used_memory: zod.z.number(),
-    total_swap: zod.z.number(),
-    used_swap: zod.z.number(),
+const MemoryInfo = v__namespace.object({
+    total_memory: v__namespace.number(),
+    used_memory: v__namespace.number(),
+    total_swap: v__namespace.number(),
+    used_swap: v__namespace.number()
 });
-const CpuInfo = zod.z.object({
-    cpus: Cpu.array(),
-    cpu_count: zod.z.number(),
+const CpuInfo = v__namespace.object({
+    cpus: v__namespace.array(Cpu),
+    cpu_count: v__namespace.number()
 });
-const AllSystemInfo = zod.z.object({
-    hostname: zod.z.string().nullable(),
-    kernel_version: zod.z.string().nullable(),
-    os_version: zod.z.string().nullable(),
-    name: zod.z.string().nullable(),
-    total_memory: zod.z.number(),
-    used_memory: zod.z.number(),
-    total_swap: zod.z.number(),
-    used_swap: zod.z.number(),
-    cpus: Cpu.array(),
-    cpu_count: zod.z.number(),
-    disks: Disk.array(),
-    networks: Network.array(),
-    components: Component.array(),
-    processes: Process.array(),
-    batteries: Batteries,
+const AllSystemInfo = v__namespace.object({
+    hostname: v__namespace.nullable(v__namespace.string()),
+    kernel_version: v__namespace.nullable(v__namespace.string()),
+    os_version: v__namespace.nullable(v__namespace.string()),
+    name: v__namespace.nullable(v__namespace.string()),
+    total_memory: v__namespace.number(),
+    used_memory: v__namespace.number(),
+    total_swap: v__namespace.number(),
+    used_swap: v__namespace.number(),
+    cpus: v__namespace.array(Cpu),
+    cpu_count: v__namespace.number(),
+    disks: v__namespace.array(Disk),
+    networks: v__namespace.array(Network),
+    components: v__namespace.array(Component),
+    processes: v__namespace.array(Process),
+    batteries: Batteries
 });
 
 exports.AllSystemInfo = AllSystemInfo;

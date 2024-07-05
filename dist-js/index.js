@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
-import { z } from 'zod';
+import * as v from 'valibot';
 
 function allSysInfo() {
     return invoke("plugin:system-info|all_sys_info");
@@ -82,174 +82,177 @@ function batteries() {
     return invoke("plugin:system-info|batteries");
 }
 
-const BatteryState = z.enum([
-    "Unknown",
-    "Charging",
-    "Discharging",
-    "Empty",
-    "Full",
-]);
-const BatteryTechnology = z.enum([
-    "Unknown",
-    "LithiumIon",
-    "LeadAcid",
-    "LithiumPolymer",
-    "NickelMetalHydride",
-    "NickelCadmium",
-    "NickelZinc",
-    "LithiumIronPhosphate",
-    "RechargeableAlkalineManganese",
-]);
-const Battery = z.object({
-    state_of_charge: z.number(),
-    energy: z.number(),
-    energy_full: z.number(),
-    energy_full_design: z.number(),
-    energy_rate: z
-        .number()
-        .describe("Amount of energy being drained from the battery."),
-    voltage: z.number(),
-    state_of_health: z.number(),
+var BatteryStateEnum;
+(function (BatteryStateEnum) {
+    BatteryStateEnum["Unknown"] = "Unknown";
+    BatteryStateEnum["Charging"] = "Charging";
+    BatteryStateEnum["Discharging"] = "Discharging";
+    BatteryStateEnum["Empty"] = "Empty";
+    BatteryStateEnum["Full"] = "Full";
+})(BatteryStateEnum || (BatteryStateEnum = {}));
+const BatteryState = v.enum(BatteryStateEnum);
+var BatteryTechnologyEnum;
+(function (BatteryTechnologyEnum) {
+    BatteryTechnologyEnum["Unknown"] = "Unknown";
+    BatteryTechnologyEnum["LithiumIon"] = "LithiumIon";
+    BatteryTechnologyEnum["LeadAcid"] = "LeadAcid";
+    BatteryTechnologyEnum["LithiumPolymer"] = "LithiumPolymer";
+    BatteryTechnologyEnum["NickelMetalHydride"] = "NickelMetalHydride";
+    BatteryTechnologyEnum["NickelCadmium"] = "NickelCadmium";
+    BatteryTechnologyEnum["NickelZinc"] = "NickelZinc";
+    BatteryTechnologyEnum["LithiumIronPhosphate"] = "LithiumIronPhosphate";
+    BatteryTechnologyEnum["RechargeableAlkalineManganese"] = "RechargeableAlkalineManganese";
+})(BatteryTechnologyEnum || (BatteryTechnologyEnum = {}));
+const BatteryTechnology = v.enum(BatteryTechnologyEnum);
+const Battery = v.object({
+    state_of_charge: v.number(),
+    energy: v.number(),
+    energy_full: v.number(),
+    energy_full_design: v.number(),
+    energy_rate: v.number(),
+    // .describe("Amount of energy being drained from the battery."),
+    voltage: v.number(),
+    state_of_health: v.number(),
     state: BatteryState,
     technology: BatteryTechnology,
-    temperature_kelin: z.number().nullable(),
-    temperature_celsius: z.number().nullable(),
-    temperature_fahrenheit: z.number().nullable(),
-    cycle_count: z.number().nullable(),
-    vendor: z.string().nullable(),
-    model: z.string().nullable(),
-    serial_number: z.string().nullable(),
-    time_to_full: z.number().nullable(),
-    time_to_empty: z.number().nullable(),
+    temperature_kelin: v.nullable(v.number()),
+    temperature_celsius: v.nullable(v.number()),
+    temperature_fahrenheit: v.nullable(v.number()),
+    cycle_count: v.nullable(v.number()),
+    vendor: v.nullable(v.string()),
+    model: v.nullable(v.string()),
+    serial_number: v.nullable(v.string()),
+    time_to_full: v.nullable(v.number()),
+    time_to_empty: v.nullable(v.number())
 });
-const Batteries = Battery.array();
+const Batteries = v.array(Battery);
 // TODO: verify actual value returned from rust for "Unknown" enum
-// export const DiskKind = z.enum(["HDD", "SSD", "Unknown"]);
-const DiskKind = z.union([
-    z.literal("HDD"),
-    z.literal("SSD"),
-    z.object({
-        Unknown: z.number(),
-    }),
+// export const DiskKind = v.enum(["HDD", "SSD", "Unknown"]);
+const DiskKind = v.union([
+    v.literal("HDD"),
+    v.literal("SSD"),
+    v.object({
+        Unknown: v.number()
+    })
 ]);
-const MacAddress = z.number().array().length(6);
-const ProcessStatus = z.union([
-    z.literal("Idle"),
-    z.literal("Run"),
-    z.literal("Sleep"),
-    z.literal("Stop"),
-    z.literal("Zombie"),
-    z.literal("Tracing"),
-    z.literal("Dead"),
-    z.literal("Wakekill"),
-    z.literal("Waking"),
-    z.literal("Parked"),
-    z.literal("LockBlocked"),
-    z.literal("UninterruptibleDiskSleep"),
-    z.object({
-        Unknown: z.number(),
-    }),
+const MacAddress = v.pipe(v.array(v.number()), v.length(6));
+const ProcessStatus = v.union([
+    v.literal("Idle"),
+    v.literal("Run"),
+    v.literal("Sleep"),
+    v.literal("Stop"),
+    v.literal("Zombie"),
+    v.literal("Tracing"),
+    v.literal("Dead"),
+    v.literal("Wakekill"),
+    v.literal("Waking"),
+    v.literal("Parked"),
+    v.literal("LockBlocked"),
+    v.literal("UninterruptibleDiskSleep"),
+    v.object({
+        Unknown: v.number()
+    })
 ]);
-const DiskUsage = z.object({
-    total_written_bytes: z.number(),
-    written_bytes: z.number(),
-    total_read_bytes: z.number(),
-    read_bytes: z.number(),
+const DiskUsage = v.object({
+    total_written_bytes: v.number(),
+    written_bytes: v.number(),
+    total_read_bytes: v.number(),
+    read_bytes: v.number()
 });
-const Cpu = z.object({
-    name: z.string(),
-    frequency: z.number(),
-    cpu_usage: z.number(),
-    vendor_id: z.string(),
-    brand: z.string(),
+const Cpu = v.object({
+    name: v.string(),
+    frequency: v.number(),
+    cpu_usage: v.number(),
+    vendor_id: v.string(),
+    brand: v.string()
 });
-const Disk = z.object({
+const Disk = v.object({
     kind: DiskKind,
-    name: z.string(),
-    file_system: z.string(),
-    mount_point: z.string(),
-    total_space: z.number(),
-    available_space: z.number(),
-    is_removable: z.boolean(),
+    name: v.string(),
+    file_system: v.string(),
+    mount_point: v.string(),
+    total_space: v.number(),
+    available_space: v.number(),
+    is_removable: v.boolean()
 });
-const Network = z.object({
-    interface_name: z.string(),
-    received: z.number(),
-    total_received: z.number(),
-    transmitted: z.number(),
-    total_transmitted: z.number(),
-    packets_received: z.number(),
-    total_packets_received: z.number(),
-    packets_transmitted: z.number(),
-    total_packets_transmitted: z.number(),
-    errors_on_received: z.number(),
-    total_errors_on_received: z.number(),
-    errors_on_transmitted: z.number(),
-    total_errors_on_transmitted: z.number(),
-    mac_address: z.number().array(),
-    mac_address_str: z.string(),
+const Network = v.object({
+    interface_name: v.string(),
+    received: v.number(),
+    total_received: v.number(),
+    transmitted: v.number(),
+    total_transmitted: v.number(),
+    packets_received: v.number(),
+    total_packets_received: v.number(),
+    packets_transmitted: v.number(),
+    total_packets_transmitted: v.number(),
+    errors_on_received: v.number(),
+    total_errors_on_received: v.number(),
+    errors_on_transmitted: v.number(),
+    total_errors_on_transmitted: v.number(),
+    mac_address: v.array(v.number()),
+    mac_address_str: v.string()
 });
-const Component = z.object({
-    temperature: z.number(),
-    max: z.number(),
-    critical: z.number().nullable(),
-    label: z.string(),
+const Component = v.object({
+    temperature: v.number(),
+    max: v.number(),
+    critical: v.nullable(v.number()),
+    label: v.string()
 });
-const Process = z.object({
-    name: z.string(),
-    cmd: z.string().array(),
-    exe: z.string().nullable(),
-    pid: z.number(),
-    environ: z.string().array(),
-    cwd: z.string().nullable(),
-    root: z.string().nullable(),
-    memory: z.number(),
-    virtual_memory: z.number(),
-    parent: z.number().nullable(),
+const Process = v.object({
+    name: v.string(),
+    cmd: v.array(v.string()),
+    exe: v.nullable(v.string()),
+    pid: v.number(),
+    environ: v.array(v.string()),
+    cwd: v.nullable(v.string()),
+    root: v.nullable(v.string()),
+    memory: v.number(),
+    virtual_memory: v.number(),
+    parent: v.nullable(v.number()),
     status: ProcessStatus,
-    start_time: z.number(),
-    run_time: z.number(),
-    cpu_usage: z.number(),
+    start_time: v.number(),
+    run_time: v.number(),
+    cpu_usage: v.number(),
     disk_usage: DiskUsage,
-    user_id: z.string().nullable(),
-    effective_user_id: z.string().nullable(),
-    group_id: z.string().nullable(),
-    effective_group_id: z.string().nullable(),
-    session_id: z.number().nullable(),
+    user_id: v.nullable(v.string()),
+    effective_user_id: v.nullable(v.string()),
+    group_id: v.nullable(v.string()),
+    effective_group_id: v.nullable(v.string()),
+    session_id: v.nullable(v.number())
 });
 // aggregate info
-const StaticInfo = z.object({
-    hostname: z.string().nullable(),
-    kernel_version: z.string().nullable(),
-    os_version: z.string().nullable(),
-    name: z.string().nullable(),
+const StaticInfo = v.object({
+    hostname: v.nullable(v.string()),
+    kernel_version: v.nullable(v.string()),
+    os_version: v.nullable(v.string()),
+    name: v.nullable(v.string())
 });
-const MemoryInfo = z.object({
-    total_memory: z.number(),
-    used_memory: z.number(),
-    total_swap: z.number(),
-    used_swap: z.number(),
+const MemoryInfo = v.object({
+    total_memory: v.number(),
+    used_memory: v.number(),
+    total_swap: v.number(),
+    used_swap: v.number()
 });
-const CpuInfo = z.object({
-    cpus: Cpu.array(),
-    cpu_count: z.number(),
+const CpuInfo = v.object({
+    cpus: v.array(Cpu),
+    cpu_count: v.number()
 });
-const AllSystemInfo = z.object({
-    hostname: z.string().nullable(),
-    kernel_version: z.string().nullable(),
-    os_version: z.string().nullable(),
-    name: z.string().nullable(),
-    total_memory: z.number(),
-    used_memory: z.number(),
-    total_swap: z.number(),
-    used_swap: z.number(),
-    cpus: Cpu.array(),
-    cpu_count: z.number(),
-    disks: Disk.array(),
-    networks: Network.array(),
-    components: Component.array(),
-    processes: Process.array(),
-    batteries: Batteries,
+const AllSystemInfo = v.object({
+    hostname: v.nullable(v.string()),
+    kernel_version: v.nullable(v.string()),
+    os_version: v.nullable(v.string()),
+    name: v.nullable(v.string()),
+    total_memory: v.number(),
+    used_memory: v.number(),
+    total_swap: v.number(),
+    used_swap: v.number(),
+    cpus: v.array(Cpu),
+    cpu_count: v.number(),
+    disks: v.array(Disk),
+    networks: v.array(Network),
+    components: v.array(Component),
+    processes: v.array(Process),
+    batteries: Batteries
 });
 
 export { AllSystemInfo, Batteries, Battery, BatteryState, BatteryTechnology, Component, Cpu, CpuInfo, Disk, DiskKind, DiskUsage, MacAddress, MemoryInfo, Network, Process, ProcessStatus, StaticInfo, allSysInfo, batteries, components, cpuCount, cpuInfo, cpus, debugCommand, disks, hostname, kernelVersion, memoryInfo, name, networks, osVersion, processes, refreshAll, refreshCpu, refreshMemory, refreshProcesses, staticInfo, totalMemory, totalSwap, usedMemory, usedSwap };

@@ -1,208 +1,210 @@
-import { z } from "zod";
+import * as v from "valibot"
 
-export const BatteryState = z.enum([
-  "Unknown",
-  "Charging",
-  "Discharging",
-  "Empty",
-  "Full",
-]);
-export type BatteryState = z.infer<typeof BatteryState>;
+enum BatteryStateEnum {
+  Unknown = "Unknown",
+  Charging = "Charging",
+  Discharging = "Discharging",
+  Empty = "Empty",
+  Full = "Full"
+}
 
-export const BatteryTechnology = z.enum([
-  "Unknown",
-  "LithiumIon",
-  "LeadAcid",
-  "LithiumPolymer",
-  "NickelMetalHydride",
-  "NickelCadmium",
-  "NickelZinc",
-  "LithiumIronPhosphate",
-  "RechargeableAlkalineManganese",
-]);
-export type BatteryTechnology = z.infer<typeof BatteryTechnology>;
+export const BatteryState = v.enum(BatteryStateEnum)
+export type BatteryState = v.InferOutput<typeof BatteryState>
 
-export const Battery = z.object({
-  state_of_charge: z.number(),
-  energy: z.number(),
-  energy_full: z.number(),
-  energy_full_design: z.number(),
-  energy_rate: z
-    .number()
-    .describe("Amount of energy being drained from the battery."),
-  voltage: z.number(),
-  state_of_health: z.number(),
+enum BatteryTechnologyEnum {
+  Unknown = "Unknown",
+  LithiumIon = "LithiumIon",
+  LeadAcid = "LeadAcid",
+  LithiumPolymer = "LithiumPolymer",
+  NickelMetalHydride = "NickelMetalHydride",
+  NickelCadmium = "NickelCadmium",
+  NickelZinc = "NickelZinc",
+  LithiumIronPhosphate = "LithiumIronPhosphate",
+  RechargeableAlkalineManganese = "RechargeableAlkalineManganese"
+}
+export const BatteryTechnology = v.enum(BatteryTechnologyEnum)
+export type BatteryTechnology = v.InferOutput<typeof BatteryTechnology>
+
+export const Battery = v.object({
+  state_of_charge: v.number(),
+  energy: v.number(),
+  energy_full: v.number(),
+  energy_full_design: v.number(),
+  energy_rate: v.number(),
+  // .describe("Amount of energy being drained from the battery."),
+  voltage: v.number(),
+  state_of_health: v.number(),
   state: BatteryState,
   technology: BatteryTechnology,
-  temperature_kelin: z.number().nullable(),
-  temperature_celsius: z.number().nullable(),
-  temperature_fahrenheit: z.number().nullable(),
-  cycle_count: z.number().nullable(),
-  vendor: z.string().nullable(),
-  model: z.string().nullable(),
-  serial_number: z.string().nullable(),
-  time_to_full: z.number().nullable(),
-  time_to_empty: z.number().nullable(),
-});
-export type Battery = z.infer<typeof Battery>;
+  temperature_kelin: v.nullable(v.number()),
+  temperature_celsius: v.nullable(v.number()),
+  temperature_fahrenheit: v.nullable(v.number()),
+  cycle_count: v.nullable(v.number()),
+  vendor: v.nullable(v.string()),
+  model: v.nullable(v.string()),
+  serial_number: v.nullable(v.string()),
+  time_to_full: v.nullable(v.number()),
+  time_to_empty: v.nullable(v.number())
+})
+export type Battery = v.InferOutput<typeof Battery>
 
-export const Batteries = Battery.array();
-export type Batteries = z.infer<typeof Batteries>;
+export const Batteries = v.array(Battery)
+export type Batteries = v.InferOutput<typeof Batteries>
 
 // TODO: verify actual value returned from rust for "Unknown" enum
 
-// export const DiskKind = z.enum(["HDD", "SSD", "Unknown"]);
-export const DiskKind = z.union([
-  z.literal("HDD"),
-  z.literal("SSD"),
-  z.object({
-    Unknown: z.number(),
-  }),
-]);
-export type DiskKind = z.infer<typeof DiskKind>;
+// export const DiskKind = v.enum(["HDD", "SSD", "Unknown"]);
+export const DiskKind = v.union([
+  v.literal("HDD"),
+  v.literal("SSD"),
+  v.object({
+    Unknown: v.number()
+  })
+])
+export type DiskKind = v.InferOutput<typeof DiskKind>
 
-export const MacAddress = z.number().array().length(6);
-export type MacAddress = z.infer<typeof MacAddress>;
+export const MacAddress = v.pipe(v.array(v.number()), v.length(6))
+export type MacAddress = v.InferOutput<typeof MacAddress>
 
-export const ProcessStatus = z.union([
-  z.literal("Idle"),
-  z.literal("Run"),
-  z.literal("Sleep"),
-  z.literal("Stop"),
-  z.literal("Zombie"),
-  z.literal("Tracing"),
-  z.literal("Dead"),
-  z.literal("Wakekill"),
-  z.literal("Waking"),
-  z.literal("Parked"),
-  z.literal("LockBlocked"),
-  z.literal("UninterruptibleDiskSleep"),
-  z.object({
-    Unknown: z.number(),
-  }),
-]);
-export type ProcessStatus = z.infer<typeof ProcessStatus>;
+export const ProcessStatus = v.union([
+  v.literal("Idle"),
+  v.literal("Run"),
+  v.literal("Sleep"),
+  v.literal("Stop"),
+  v.literal("Zombie"),
+  v.literal("Tracing"),
+  v.literal("Dead"),
+  v.literal("Wakekill"),
+  v.literal("Waking"),
+  v.literal("Parked"),
+  v.literal("LockBlocked"),
+  v.literal("UninterruptibleDiskSleep"),
+  v.object({
+    Unknown: v.number()
+  })
+])
+export type ProcessStatus = v.InferOutput<typeof ProcessStatus>
 
-export const DiskUsage = z.object({
-  total_written_bytes: z.number(),
-  written_bytes: z.number(),
-  total_read_bytes: z.number(),
-  read_bytes: z.number(),
-});
-export type DiskUsage = z.infer<typeof DiskUsage>;
+export const DiskUsage = v.object({
+  total_written_bytes: v.number(),
+  written_bytes: v.number(),
+  total_read_bytes: v.number(),
+  read_bytes: v.number()
+})
+export type DiskUsage = v.InferOutput<typeof DiskUsage>
 
-export const Cpu = z.object({
-  name: z.string(),
-  frequency: z.number(),
-  cpu_usage: z.number(),
-  vendor_id: z.string(),
-  brand: z.string(),
-});
-export type Cpu = z.infer<typeof Cpu>;
+export const Cpu = v.object({
+  name: v.string(),
+  frequency: v.number(),
+  cpu_usage: v.number(),
+  vendor_id: v.string(),
+  brand: v.string()
+})
+export type Cpu = v.InferOutput<typeof Cpu>
 
-export const Disk = z.object({
+export const Disk = v.object({
   kind: DiskKind,
-  name: z.string(),
-  file_system: z.string(),
-  mount_point: z.string(),
-  total_space: z.number(),
-  available_space: z.number(),
-  is_removable: z.boolean(),
-});
-export type Disk = z.infer<typeof Disk>;
+  name: v.string(),
+  file_system: v.string(),
+  mount_point: v.string(),
+  total_space: v.number(),
+  available_space: v.number(),
+  is_removable: v.boolean()
+})
+export type Disk = v.InferOutput<typeof Disk>
 
-export const Network = z.object({
-  interface_name: z.string(),
-  received: z.number(),
-  total_received: z.number(),
-  transmitted: z.number(),
-  total_transmitted: z.number(),
-  packets_received: z.number(),
-  total_packets_received: z.number(),
-  packets_transmitted: z.number(),
-  total_packets_transmitted: z.number(),
-  errors_on_received: z.number(),
-  total_errors_on_received: z.number(),
-  errors_on_transmitted: z.number(),
-  total_errors_on_transmitted: z.number(),
-  mac_address: z.number().array(),
-  mac_address_str: z.string(),
-});
-export type Network = z.infer<typeof Network>;
+export const Network = v.object({
+  interface_name: v.string(),
+  received: v.number(),
+  total_received: v.number(),
+  transmitted: v.number(),
+  total_transmitted: v.number(),
+  packets_received: v.number(),
+  total_packets_received: v.number(),
+  packets_transmitted: v.number(),
+  total_packets_transmitted: v.number(),
+  errors_on_received: v.number(),
+  total_errors_on_received: v.number(),
+  errors_on_transmitted: v.number(),
+  total_errors_on_transmitted: v.number(),
+  mac_address: v.array(v.number()),
+  mac_address_str: v.string()
+})
+export type Network = v.InferOutput<typeof Network>
 
-export const Component = z.object({
-  temperature: z.number(),
-  max: z.number(),
-  critical: z.number().nullable(),
-  label: z.string(),
-});
-export type Component = z.infer<typeof Component>;
+export const Component = v.object({
+  temperature: v.number(),
+  max: v.number(),
+  critical: v.nullable(v.number()),
+  label: v.string()
+})
+export type Component = v.InferOutput<typeof Component>
 
-export const Process = z.object({
-  name: z.string(),
-  cmd: z.string().array(),
-  exe: z.string().nullable(),
-  pid: z.number(),
-  environ: z.string().array(),
-  cwd: z.string().nullable(),
-  root: z.string().nullable(),
-  memory: z.number(),
-  virtual_memory: z.number(),
-  parent: z.number().nullable(),
+export const Process = v.object({
+  name: v.string(),
+  cmd: v.array(v.string()),
+  exe: v.nullable(v.string()),
+  pid: v.number(),
+  environ: v.array(v.string()),
+  cwd: v.nullable(v.string()),
+  root: v.nullable(v.string()),
+  memory: v.number(),
+  virtual_memory: v.number(),
+  parent: v.nullable(v.number()),
   status: ProcessStatus,
-  start_time: z.number(),
-  run_time: z.number(),
-  cpu_usage: z.number(),
+  start_time: v.number(),
+  run_time: v.number(),
+  cpu_usage: v.number(),
   disk_usage: DiskUsage,
-  user_id: z.string().nullable(),
-  effective_user_id: z.string().nullable(),
-  group_id: z.string().nullable(),
-  effective_group_id: z.string().nullable(),
-  session_id: z.number().nullable(),
-});
-export type Process = z.infer<typeof Process>;
+  user_id: v.nullable(v.string()),
+  effective_user_id: v.nullable(v.string()),
+  group_id: v.nullable(v.string()),
+  effective_group_id: v.nullable(v.string()),
+  session_id: v.nullable(v.number())
+})
+export type Process = v.InferOutput<typeof Process>
 
 // aggregate info
-export const StaticInfo = z.object({
-  hostname: z.string().nullable(),
-  kernel_version: z.string().nullable(),
-  os_version: z.string().nullable(),
-  name: z.string().nullable(),
-});
-export type StaticInfo = z.infer<typeof StaticInfo>;
+export const StaticInfo = v.object({
+  hostname: v.nullable(v.string()),
+  kernel_version: v.nullable(v.string()),
+  os_version: v.nullable(v.string()),
+  name: v.nullable(v.string())
+})
+export type StaticInfo = v.InferOutput<typeof StaticInfo>
 
-export const MemoryInfo = z.object({
-  total_memory: z.number(),
-  used_memory: z.number(),
-  total_swap: z.number(),
-  used_swap: z.number(),
-});
-export type MemoryInfo = z.infer<typeof MemoryInfo>;
+export const MemoryInfo = v.object({
+  total_memory: v.number(),
+  used_memory: v.number(),
+  total_swap: v.number(),
+  used_swap: v.number()
+})
+export type MemoryInfo = v.InferOutput<typeof MemoryInfo>
 
-export const CpuInfo = z.object({
-  cpus: Cpu.array(),
-  cpu_count: z.number(),
-});
-export type CpuInfo = z.infer<typeof CpuInfo>;
+export const CpuInfo = v.object({
+  cpus: v.array(Cpu),
+  cpu_count: v.number()
+})
+export type CpuInfo = v.InferOutput<typeof CpuInfo>
 
-export const AllSystemInfo = z.object({
-  hostname: z.string().nullable(),
-  kernel_version: z.string().nullable(),
-  os_version: z.string().nullable(),
-  name: z.string().nullable(),
+export const AllSystemInfo = v.object({
+  hostname: v.nullable(v.string()),
+  kernel_version: v.nullable(v.string()),
+  os_version: v.nullable(v.string()),
+  name: v.nullable(v.string()),
 
-  total_memory: z.number(),
-  used_memory: z.number(),
-  total_swap: z.number(),
-  used_swap: z.number(),
+  total_memory: v.number(),
+  used_memory: v.number(),
+  total_swap: v.number(),
+  used_swap: v.number(),
 
-  cpus: Cpu.array(),
-  cpu_count: z.number(),
+  cpus: v.array(Cpu),
+  cpu_count: v.number(),
 
-  disks: Disk.array(),
-  networks: Network.array(),
-  components: Component.array(),
-  processes: Process.array(),
-  batteries: Batteries,
-});
-export type AllSystemInfo = z.infer<typeof AllSystemInfo>;
+  disks: v.array(Disk),
+  networks: v.array(Network),
+  components: v.array(Component),
+  processes: v.array(Process),
+  batteries: Batteries
+})
+export type AllSystemInfo = v.InferOutput<typeof AllSystemInfo>
