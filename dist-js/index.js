@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
-import * as v from 'valibot';
+import { enum_, object, number, nullable, string, array, union, literal, pipe, length, boolean } from 'valibot';
 
 function allSysInfo() {
     return invoke("plugin:system-info|all_sys_info");
@@ -90,7 +90,7 @@ var BatteryStateEnum;
     BatteryStateEnum["Empty"] = "Empty";
     BatteryStateEnum["Full"] = "Full";
 })(BatteryStateEnum || (BatteryStateEnum = {}));
-const BatteryState = v.enum(BatteryStateEnum);
+const BatteryState = enum_(BatteryStateEnum);
 var BatteryTechnologyEnum;
 (function (BatteryTechnologyEnum) {
     BatteryTechnologyEnum["Unknown"] = "Unknown";
@@ -103,155 +103,155 @@ var BatteryTechnologyEnum;
     BatteryTechnologyEnum["LithiumIronPhosphate"] = "LithiumIronPhosphate";
     BatteryTechnologyEnum["RechargeableAlkalineManganese"] = "RechargeableAlkalineManganese";
 })(BatteryTechnologyEnum || (BatteryTechnologyEnum = {}));
-const BatteryTechnology = v.enum(BatteryTechnologyEnum);
-const Battery = v.object({
-    state_of_charge: v.number(),
-    energy: v.number(),
-    energy_full: v.number(),
-    energy_full_design: v.number(),
-    energy_rate: v.number(),
+const BatteryTechnology = enum_(BatteryTechnologyEnum);
+const Battery = object({
+    state_of_charge: number(),
+    energy: number(),
+    energy_full: number(),
+    energy_full_design: number(),
+    energy_rate: number(),
     // .describe("Amount of energy being drained from the battery."),
-    voltage: v.number(),
-    state_of_health: v.number(),
+    voltage: number(),
+    state_of_health: number(),
     state: BatteryState,
     technology: BatteryTechnology,
-    temperature_kelin: v.nullable(v.number()),
-    temperature_celsius: v.nullable(v.number()),
-    temperature_fahrenheit: v.nullable(v.number()),
-    cycle_count: v.nullable(v.number()),
-    vendor: v.nullable(v.string()),
-    model: v.nullable(v.string()),
-    serial_number: v.nullable(v.string()),
-    time_to_full: v.nullable(v.number()),
-    time_to_empty: v.nullable(v.number())
+    temperature_kelin: nullable(number()),
+    temperature_celsius: nullable(number()),
+    temperature_fahrenheit: nullable(number()),
+    cycle_count: nullable(number()),
+    vendor: nullable(string()),
+    model: nullable(string()),
+    serial_number: nullable(string()),
+    time_to_full: nullable(number()),
+    time_to_empty: nullable(number())
 });
-const Batteries = v.array(Battery);
+const Batteries = array(Battery);
 // TODO: verify actual value returned from rust for "Unknown" enum
-// export const DiskKind = v.enum(["HDD", "SSD", "Unknown"]);
-const DiskKind = v.union([
-    v.literal("HDD"),
-    v.literal("SSD"),
-    v.object({
-        Unknown: v.number()
+// export const DiskKind = enum_(["HDD", "SSD", "Unknown"]);
+const DiskKind = union([
+    literal("HDD"),
+    literal("SSD"),
+    object({
+        Unknown: number()
     })
 ]);
-const MacAddress = v.pipe(v.array(v.number()), v.length(6));
-const ProcessStatus = v.union([
-    v.literal("Idle"),
-    v.literal("Run"),
-    v.literal("Sleep"),
-    v.literal("Stop"),
-    v.literal("Zombie"),
-    v.literal("Tracing"),
-    v.literal("Dead"),
-    v.literal("Wakekill"),
-    v.literal("Waking"),
-    v.literal("Parked"),
-    v.literal("LockBlocked"),
-    v.literal("UninterruptibleDiskSleep"),
-    v.object({
-        Unknown: v.number()
+const MacAddress = pipe(array(number()), length(6));
+const ProcessStatus = union([
+    literal("Idle"),
+    literal("Run"),
+    literal("Sleep"),
+    literal("Stop"),
+    literal("Zombie"),
+    literal("Tracing"),
+    literal("Dead"),
+    literal("Wakekill"),
+    literal("Waking"),
+    literal("Parked"),
+    literal("LockBlocked"),
+    literal("UninterruptibleDiskSleep"),
+    object({
+        Unknown: number()
     })
 ]);
-const DiskUsage = v.object({
-    total_written_bytes: v.number(),
-    written_bytes: v.number(),
-    total_read_bytes: v.number(),
-    read_bytes: v.number()
+const DiskUsage = object({
+    total_written_bytes: number(),
+    written_bytes: number(),
+    total_read_bytes: number(),
+    read_bytes: number()
 });
-const Cpu = v.object({
-    name: v.string(),
-    frequency: v.number(),
-    cpu_usage: v.number(),
-    vendor_id: v.string(),
-    brand: v.string()
+const Cpu = object({
+    name: string(),
+    frequency: number(),
+    cpu_usage: number(),
+    vendor_id: string(),
+    brand: string()
 });
-const Disk = v.object({
+const Disk = object({
     kind: DiskKind,
-    name: v.string(),
-    file_system: v.string(),
-    mount_point: v.string(),
-    total_space: v.number(),
-    available_space: v.number(),
-    is_removable: v.boolean()
+    name: string(),
+    file_system: string(),
+    mount_point: string(),
+    total_space: number(),
+    available_space: number(),
+    is_removable: boolean()
 });
-const Network = v.object({
-    interface_name: v.string(),
-    received: v.number(),
-    total_received: v.number(),
-    transmitted: v.number(),
-    total_transmitted: v.number(),
-    packets_received: v.number(),
-    total_packets_received: v.number(),
-    packets_transmitted: v.number(),
-    total_packets_transmitted: v.number(),
-    errors_on_received: v.number(),
-    total_errors_on_received: v.number(),
-    errors_on_transmitted: v.number(),
-    total_errors_on_transmitted: v.number(),
-    mac_address: v.array(v.number()),
-    mac_address_str: v.string()
+const Network = object({
+    interface_name: string(),
+    received: number(),
+    total_received: number(),
+    transmitted: number(),
+    total_transmitted: number(),
+    packets_received: number(),
+    total_packets_received: number(),
+    packets_transmitted: number(),
+    total_packets_transmitted: number(),
+    errors_on_received: number(),
+    total_errors_on_received: number(),
+    errors_on_transmitted: number(),
+    total_errors_on_transmitted: number(),
+    mac_address: array(number()),
+    mac_address_str: string()
 });
-const Component = v.object({
-    temperature: v.number(),
-    max: v.number(),
-    critical: v.nullable(v.number()),
-    label: v.string()
+const Component = object({
+    temperature: number(),
+    max: number(),
+    critical: nullable(number()),
+    label: string()
 });
-const Process = v.object({
-    name: v.string(),
-    cmd: v.array(v.string()),
-    exe: v.nullable(v.string()),
-    pid: v.number(),
-    environ: v.array(v.string()),
-    cwd: v.nullable(v.string()),
-    root: v.nullable(v.string()),
-    memory: v.number(),
-    virtual_memory: v.number(),
-    parent: v.nullable(v.number()),
+const Process = object({
+    name: string(),
+    cmd: array(string()),
+    exe: nullable(string()),
+    pid: number(),
+    environ: array(string()),
+    cwd: nullable(string()),
+    root: nullable(string()),
+    memory: number(),
+    virtual_memory: number(),
+    parent: nullable(number()),
     status: ProcessStatus,
-    start_time: v.number(),
-    run_time: v.number(),
-    cpu_usage: v.number(),
+    start_time: number(),
+    run_time: number(),
+    cpu_usage: number(),
     disk_usage: DiskUsage,
-    user_id: v.nullable(v.string()),
-    effective_user_id: v.nullable(v.string()),
-    group_id: v.nullable(v.string()),
-    effective_group_id: v.nullable(v.string()),
-    session_id: v.nullable(v.number())
+    user_id: nullable(string()),
+    effective_user_id: nullable(string()),
+    group_id: nullable(string()),
+    effective_group_id: nullable(string()),
+    session_id: nullable(number())
 });
 // aggregate info
-const StaticInfo = v.object({
-    hostname: v.nullable(v.string()),
-    kernel_version: v.nullable(v.string()),
-    os_version: v.nullable(v.string()),
-    name: v.nullable(v.string())
+const StaticInfo = object({
+    hostname: nullable(string()),
+    kernel_version: nullable(string()),
+    os_version: nullable(string()),
+    name: nullable(string())
 });
-const MemoryInfo = v.object({
-    total_memory: v.number(),
-    used_memory: v.number(),
-    total_swap: v.number(),
-    used_swap: v.number()
+const MemoryInfo = object({
+    total_memory: number(),
+    used_memory: number(),
+    total_swap: number(),
+    used_swap: number()
 });
-const CpuInfo = v.object({
-    cpus: v.array(Cpu),
-    cpu_count: v.number()
+const CpuInfo = object({
+    cpus: array(Cpu),
+    cpu_count: number()
 });
-const AllSystemInfo = v.object({
-    hostname: v.nullable(v.string()),
-    kernel_version: v.nullable(v.string()),
-    os_version: v.nullable(v.string()),
-    name: v.nullable(v.string()),
-    total_memory: v.number(),
-    used_memory: v.number(),
-    total_swap: v.number(),
-    used_swap: v.number(),
-    cpus: v.array(Cpu),
-    cpu_count: v.number(),
-    disks: v.array(Disk),
-    networks: v.array(Network),
-    components: v.array(Component),
-    processes: v.array(Process),
+const AllSystemInfo = object({
+    hostname: nullable(string()),
+    kernel_version: nullable(string()),
+    os_version: nullable(string()),
+    name: nullable(string()),
+    total_memory: number(),
+    used_memory: number(),
+    total_swap: number(),
+    used_swap: number(),
+    cpus: array(Cpu),
+    cpu_count: number(),
+    disks: array(Disk),
+    networks: array(Network),
+    components: array(Component),
+    processes: array(Process),
     batteries: Batteries
 });
 
