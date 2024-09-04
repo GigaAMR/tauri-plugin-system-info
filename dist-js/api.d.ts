@@ -10,8 +10,8 @@ export declare function name(): Promise<String>;
 export declare function kernelVersion(): Promise<String>;
 export declare function osVersion(): Promise<String>;
 export declare function staticInfo(): Promise<StaticInfo>;
-export declare function components(): Promise<Component>;
-export declare function cpus(): Promise<Cpu>;
+export declare function components(): Promise<Component[]>;
+export declare function cpus(): Promise<Cpu[]>;
 export declare function cpuCount(): Promise<number>;
 export declare function cpuInfo(): Promise<CpuInfo>;
 export declare function disks(): Promise<Disk[]>;
@@ -22,5 +22,5 @@ export declare function refreshMemory(): Promise<void>;
 export declare function refreshCpu(): Promise<void>;
 export declare function refreshProcesses(): Promise<void>;
 export declare function debugCommand(): Promise<unknown>;
-export declare function batteries(): Promise<Battery>;
+export declare function batteries(): Promise<Battery[]>;
 //# sourceMappingURL=api.d.ts.map
