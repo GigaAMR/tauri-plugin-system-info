@@ -11,7 +11,7 @@ license = "MIT"
 repository = "https://github.com/HuakunShen/tauri-plugin-system-info"
 
 [dependencies]
-tauri = { version = "2.0.0-beta.19" }
+tauri = { version = "2.0.0-rc.8" }
 serde = "1.0"
 thiserror = "1.0"
 sysinfo = { version = "0.30.5" }
@@ -19,4 +19,4 @@ starship-battery = "0.8.2"
 uom = { version = "0.35.0", features = ["serde"] }
 
 [build-dependencies]
-tauri-plugin = { version = "2.0.0-beta.15", features = ["build"] }
+tauri-plugin = { version = "2.0.0-rc.7", features = ["build"] }
