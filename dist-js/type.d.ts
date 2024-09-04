@@ -31,7 +31,7 @@ export declare const Battery: import("valibot").ObjectSchema<{
     readonly state_of_health: import("valibot").NumberSchema<undefined>;
     readonly state: import("valibot").EnumSchema<typeof BatteryStateEnum, undefined>;
     readonly technology: import("valibot").EnumSchema<typeof BatteryTechnologyEnum, undefined>;
-    readonly temperature_kelin: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;
+    readonly temperature_kelvin: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;
     readonly temperature_celsius: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;
     readonly temperature_fahrenheit: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;
     readonly cycle_count: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;
@@ -52,7 +52,7 @@ export declare const Batteries: import("valibot").ArraySchema<import("valibot").
     readonly state_of_health: import("valibot").NumberSchema<undefined>;
     readonly state: import("valibot").EnumSchema<typeof BatteryStateEnum, undefined>;
     readonly technology: import("valibot").EnumSchema<typeof BatteryTechnologyEnum, undefined>;
-    readonly temperature_kelin: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;
+    readonly temperature_kelvin: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;
     readonly temperature_celsius: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;
     readonly temperature_fahrenheit: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;
     readonly cycle_count: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;
@@ -270,7 +270,7 @@ export declare const AllSystemInfo: import("valibot").ObjectSchema<{
         readonly state_of_health: import("valibot").NumberSchema<undefined>;
         readonly state: import("valibot").EnumSchema<typeof BatteryStateEnum, undefined>;
         readonly technology: import("valibot").EnumSchema<typeof BatteryTechnologyEnum, undefined>;
-        readonly temperature_kelin: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;
+        readonly temperature_kelvin: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;
         readonly temperature_celsius: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;
         readonly temperature_fahrenheit: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;
         readonly cycle_count: import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>;

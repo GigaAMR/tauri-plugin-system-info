@@ -316,7 +316,7 @@ pub struct Battery {
     state_of_health: f32,
     state: BatteryState,
     technology: Technology,
-    temperature_kelin: Option<f32>,
+    temperature_kelvin: Option<f32>,
     temperature_celsius: Option<f32>,
     temperature_fahrenheit: Option<f32>,
     cycle_count: Option<u32>,
@@ -329,6 +329,9 @@ pub struct Battery {
 
 impl From<starship_battery::Battery> for Battery {
     fn from(battery: starship_battery::Battery) -> Self {
+        let temp_kelvin = battery.temperature().map(|temp| temp.value);
+        let temp_celsius = temp_kelvin.map(|temp| temp - 273.15);
+        let temp_fahrenheit = temp_celsius.map(|temp| temp * 9.0 / 5.0 + 32.0);
         Battery {
             state_of_charge: battery.state_of_charge().value,
             energy: battery.energy().value,
@@ -339,9 +342,9 @@ impl From<starship_battery::Battery> for Battery {
             state_of_health: battery.state_of_health().value,
             state: battery.state().into(),
             technology: battery.technology().into(),
-            temperature_kelin: battery.temperature().map(|temp| temp.value),
-            temperature_celsius: battery.temperature().map(|temp| temp.value),
-            temperature_fahrenheit: battery.temperature().map(|temp| temp.value),
+            temperature_kelvin: temp_kelvin,
+            temperature_celsius: temp_celsius,
+            temperature_fahrenheit: temp_fahrenheit,
             cycle_count: battery.cycle_count(),
             vendor: battery.vendor().map(|vendor| vendor.to_string()),
             model: battery.model().map(|model| model.to_string()),

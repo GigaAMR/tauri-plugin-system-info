@@ -117,7 +117,7 @@ const Battery = valibot.object({
     state_of_health: valibot.number(),
     state: BatteryState,
     technology: BatteryTechnology,
-    temperature_kelin: valibot.nullable(valibot.number()),
+    temperature_kelvin: valibot.nullable(valibot.number()),
     temperature_celsius: valibot.nullable(valibot.number()),
     temperature_fahrenheit: valibot.nullable(valibot.number()),
     cycle_count: valibot.nullable(valibot.number()),

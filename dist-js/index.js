@@ -115,7 +115,7 @@ const Battery = object({
     state_of_health: number(),
     state: BatteryState,
     technology: BatteryTechnology,
-    temperature_kelin: nullable(number()),
+    temperature_kelvin: nullable(number()),
     temperature_celsius: nullable(number()),
     temperature_fahrenheit: nullable(number()),
     cycle_count: nullable(number()),
