@@ -295,361 +295,259 @@
       "type": "string",
       "oneOf": [
         {
-          "description": "allow-all -> This enables all permissions for system info plugin",
+          "description": "This enables all permissions for system info plugin",
           "type": "string",
-          "enum": [
-            "allow-all"
-          ]
+          "const": "allow-all"
         },
         {
-          "description": "allow-all-sys-info -> Enables the all_sys_info command without any pre-configured scope.",
+          "description": "Enables the all_sys_info command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-all-sys-info"
-          ]
+          "const": "allow-all-sys-info"
         },
         {
-          "description": "deny-all-sys-info -> Denies the all_sys_info command without any pre-configured scope.",
+          "description": "Denies the all_sys_info command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-all-sys-info"
-          ]
+          "const": "deny-all-sys-info"
         },
         {
-          "description": "allow-batteries -> Enables the batteries command without any pre-configured scope.",
+          "description": "Enables the batteries command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-batteries"
-          ]
+          "const": "allow-batteries"
         },
         {
-          "description": "deny-batteries -> Denies the batteries command without any pre-configured scope.",
+          "description": "Denies the batteries command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-batteries"
-          ]
+          "const": "deny-batteries"
         },
         {
-          "description": "allow-components -> Enables the components command without any pre-configured scope.",
+          "description": "Enables the components command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-components"
-          ]
+          "const": "allow-components"
         },
         {
-          "description": "deny-components -> Denies the components command without any pre-configured scope.",
+          "description": "Denies the components command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-components"
-          ]
+          "const": "deny-components"
         },
         {
-          "description": "allow-cpu-count -> Enables the cpu_count command without any pre-configured scope.",
+          "description": "Enables the cpu_count command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-cpu-count"
-          ]
+          "const": "allow-cpu-count"
         },
         {
-          "description": "deny-cpu-count -> Denies the cpu_count command without any pre-configured scope.",
+          "description": "Denies the cpu_count command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-cpu-count"
-          ]
+          "const": "deny-cpu-count"
         },
         {
-          "description": "allow-cpu-info -> Enables the cpu_info command without any pre-configured scope.",
+          "description": "Enables the cpu_info command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-cpu-info"
-          ]
+          "const": "allow-cpu-info"
         },
         {
-          "description": "deny-cpu-info -> Denies the cpu_info command without any pre-configured scope.",
+          "description": "Denies the cpu_info command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-cpu-info"
-          ]
+          "const": "deny-cpu-info"
         },
         {
-          "description": "allow-cpus -> Enables the cpus command without any pre-configured scope.",
+          "description": "Enables the cpus command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-cpus"
-          ]
+          "const": "allow-cpus"
         },
         {
-          "description": "deny-cpus -> Denies the cpus command without any pre-configured scope.",
+          "description": "Denies the cpus command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-cpus"
-          ]
+          "const": "deny-cpus"
         },
         {
-          "description": "allow-disks -> Enables the disks command without any pre-configured scope.",
+          "description": "Enables the disks command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-disks"
-          ]
+          "const": "allow-disks"
         },
         {
-          "description": "deny-disks -> Denies the disks command without any pre-configured scope.",
+          "description": "Denies the disks command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-disks"
-          ]
+          "const": "deny-disks"
         },
         {
-          "description": "allow-execute -> Enables the execute command without any pre-configured scope.",
+          "description": "Enables the execute command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-execute"
-          ]
+          "const": "allow-execute"
         },
         {
-          "description": "deny-execute -> Denies the execute command without any pre-configured scope.",
+          "description": "Denies the execute command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-execute"
-          ]
+          "const": "deny-execute"
         },
         {
-          "description": "allow-hostname -> Enables the hostname command without any pre-configured scope.",
+          "description": "Enables the hostname command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-hostname"
-          ]
+          "const": "allow-hostname"
         },
         {
-          "description": "deny-hostname -> Denies the hostname command without any pre-configured scope.",
+          "description": "Denies the hostname command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-hostname"
-          ]
+          "const": "deny-hostname"
         },
         {
-          "description": "allow-kernel-version -> Enables the kernel_version command without any pre-configured scope.",
+          "description": "Enables the kernel_version command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-kernel-version"
-          ]
+          "const": "allow-kernel-version"
         },
         {
-          "description": "deny-kernel-version -> Denies the kernel_version command without any pre-configured scope.",
+          "description": "Denies the kernel_version command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-kernel-version"
-          ]
+          "const": "deny-kernel-version"
         },
         {
-          "description": "allow-memory-info -> Enables the memory_info command without any pre-configured scope.",
+          "description": "Enables the memory_info command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-memory-info"
-          ]
+          "const": "allow-memory-info"
         },
         {
-          "description": "deny-memory-info -> Denies the memory_info command without any pre-configured scope.",
+          "description": "Denies the memory_info command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-memory-info"
-          ]
+          "const": "deny-memory-info"
         },
         {
-          "description": "allow-name -> Enables the name command without any pre-configured scope.",
+          "description": "Enables the name command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-name"
-          ]
+          "const": "allow-name"
         },
         {
-          "description": "deny-name -> Denies the name command without any pre-configured scope.",
+          "description": "Denies the name command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-name"
-          ]
+          "const": "deny-name"
         },
         {
-          "description": "allow-networks -> Enables the networks command without any pre-configured scope.",
+          "description": "Enables the networks command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-networks"
-          ]
+          "const": "allow-networks"
         },
         {
-          "description": "deny-networks -> Denies the networks command without any pre-configured scope.",
+          "description": "Denies the networks command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-networks"
-          ]
+          "const": "deny-networks"
         },
         {
-          "description": "allow-os-version -> Enables the os_version command without any pre-configured scope.",
+          "description": "Enables the os_version command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-os-version"
-          ]
+          "const": "allow-os-version"
         },
         {
-          "description": "deny-os-version -> Denies the os_version command without any pre-configured scope.",
+          "description": "Denies the os_version command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-os-version"
-          ]
+          "const": "deny-os-version"
         },
         {
-          "description": "allow-ping -> Enables the ping command without any pre-configured scope.",
+          "description": "Enables the ping command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-ping"
-          ]
+          "const": "allow-ping"
         },
         {
-          "description": "deny-ping -> Denies the ping command without any pre-configured scope.",
+          "description": "Denies the ping command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-ping"
-          ]
+          "const": "deny-ping"
         },
         {
-          "description": "allow-processes -> Enables the processes command without any pre-configured scope.",
+          "description": "Enables the processes command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-processes"
-          ]
+          "const": "allow-processes"
         },
         {
-          "description": "deny-processes -> Denies the processes command without any pre-configured scope.",
+          "description": "Denies the processes command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-processes"
-          ]
+          "const": "deny-processes"
         },
         {
-          "description": "allow-refresh-all -> Enables the refresh_all command without any pre-configured scope.",
+          "description": "Enables the refresh_all command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-refresh-all"
-          ]
+          "const": "allow-refresh-all"
         },
         {
-          "description": "deny-refresh-all -> Denies the refresh_all command without any pre-configured scope.",
+          "description": "Denies the refresh_all command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-refresh-all"
-          ]
+          "const": "deny-refresh-all"
         },
         {
-          "description": "allow-refresh-cpu -> Enables the refresh_cpu command without any pre-configured scope.",
+          "description": "Enables the refresh_cpu command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-refresh-cpu"
-          ]
+          "const": "allow-refresh-cpu"
         },
         {
-          "description": "deny-refresh-cpu -> Denies the refresh_cpu command without any pre-configured scope.",
+          "description": "Denies the refresh_cpu command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-refresh-cpu"
-          ]
+          "const": "deny-refresh-cpu"
         },
         {
-          "description": "allow-refresh-memory -> Enables the refresh_memory command without any pre-configured scope.",
+          "description": "Enables the refresh_memory command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-refresh-memory"
-          ]
+          "const": "allow-refresh-memory"
         },
         {
-          "description": "deny-refresh-memory -> Denies the refresh_memory command without any pre-configured scope.",
+          "description": "Denies the refresh_memory command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-refresh-memory"
-          ]
+          "const": "deny-refresh-memory"
         },
         {
-          "description": "allow-refresh-processes -> Enables the refresh_processes command without any pre-configured scope.",
+          "description": "Enables the refresh_processes command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-refresh-processes"
-          ]
+          "const": "allow-refresh-processes"
         },
         {
-          "description": "deny-refresh-processes -> Denies the refresh_processes command without any pre-configured scope.",
+          "description": "Denies the refresh_processes command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-refresh-processes"
-          ]
+          "const": "deny-refresh-processes"
         },
         {
-          "description": "allow-static-info -> Enables the static_info command without any pre-configured scope.",
+          "description": "Enables the static_info command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-static-info"
-          ]
+          "const": "allow-static-info"
         },
         {
-          "description": "deny-static-info -> Denies the static_info command without any pre-configured scope.",
+          "description": "Denies the static_info command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-static-info"
-          ]
+          "const": "deny-static-info"
         },
         {
-          "description": "allow-total-memory -> Enables the total_memory command without any pre-configured scope.",
+          "description": "Enables the total_memory command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-total-memory"
-          ]
+          "const": "allow-total-memory"
         },
         {
-          "description": "deny-total-memory -> Denies the total_memory command without any pre-configured scope.",
+          "description": "Denies the total_memory command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-total-memory"
-          ]
+          "const": "deny-total-memory"
         },
         {
-          "description": "allow-total-swap -> Enables the total_swap command without any pre-configured scope.",
+          "description": "Enables the total_swap command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-total-swap"
-          ]
+          "const": "allow-total-swap"
         },
         {
-          "description": "deny-total-swap -> Denies the total_swap command without any pre-configured scope.",
+          "description": "Denies the total_swap command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-total-swap"
-          ]
+          "const": "deny-total-swap"
         },
         {
-          "description": "allow-used-memory -> Enables the used_memory command without any pre-configured scope.",
+          "description": "Enables the used_memory command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-used-memory"
-          ]
+          "const": "allow-used-memory"
         },
         {
-          "description": "deny-used-memory -> Denies the used_memory command without any pre-configured scope.",
+          "description": "Denies the used_memory command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-used-memory"
-          ]
+          "const": "deny-used-memory"
         },
         {
-          "description": "allow-used-swap -> Enables the used_swap command without any pre-configured scope.",
+          "description": "Enables the used_swap command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-used-swap"
-          ]
+          "const": "allow-used-swap"
         },
         {
-          "description": "deny-used-swap -> Denies the used_swap command without any pre-configured scope.",
+          "description": "Denies the used_swap command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-used-swap"
-          ]
+          "const": "deny-used-swap"
         }
       ]
     }
