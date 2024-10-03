@@ -48,11 +48,11 @@ export function staticInfo(): Promise<StaticInfo> {
   return invoke("plugin:system-info|static_info");
 }
 // Components
-export function components(): Promise<Component> {
+export function components(): Promise<Component[]> {
   return invoke("plugin:system-info|components");
 }
 // Cpu
-export function cpus(): Promise<Cpu> {
+export function cpus(): Promise<Cpu[]> {
   return invoke("plugin:system-info|cpus");
 }
 export function cpuCount(): Promise<number> {
@@ -91,6 +91,6 @@ export function debugCommand() {
   return invoke("plugin:system-info|debug");
 }
 
-export function batteries(): Promise<Battery> {
+export function batteries(): Promise<Battery[]> {
   return invoke("plugin:system-info|batteries");
 }
