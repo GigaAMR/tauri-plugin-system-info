@@ -1,6 +1,6 @@
 [package]
 name = "tauri-plugin-system-info"
-version = "2.0.7"
+version = "2.0.8"
 authors = ["Huakun"]
 edition = "2021"
 rust-version = "1.70"
@@ -9,6 +9,10 @@ links = "tauri-plugin-system-info"
 description = "A tauri plugin for retrieving system info"
 license = "MIT"
 repository = "https://github.com/HuakunShen/tauri-plugin-system-info"
+
+[package.metadata.docs.rs]
+rustc-args = ["--cfg", "docsrs"]
+rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
 tauri = { version = "2.0.1" }

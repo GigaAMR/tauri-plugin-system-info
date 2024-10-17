@@ -1,6 +1,7 @@
 # Tauri Plugin system-info
 
-Documentation Website: https://huakunshen.github.io/tauri-plugin-system-info
+TypeScript Documentation: https://huakunshen.github.io/tauri-plugin-system-info
+Rust Documentation: https://docs.rs/crate/tauri-plugin-system-info
 
 > This is a Tauri plugin for reading system information.
 
@@ -95,9 +96,23 @@ console.log(Batteries.parse(await batteries()));
 
 The API functions in Rust are all exported, so that you can also build your own commands.
 
+Here is a simple example:
+
 ```rust
 use tauri_plugin_system_info::utils::{SysInfo, SysInfoState};
+use tauri_plugin_system_info::commands;
+use tauri_plugin_system_info::model::Cpu;
+
+#[tauri::command]
+fn cpu_count() -> Result<usize, String> {
+    let state = SysInfoState::default();
+    let sysinfo = state.sysinfo.lock().unwrap();
+    let cpu_count = sysinfo.cpu_count();
+    Ok(cpu_count)
+}
 ```
+
+See https://docs.rs/crate/tauri-plugin-system-info/ for full rust documentation.
 
 `SysInfo` is the API struct that can be used to access all information. It's like a wrapper for `sysinfo` APIs and other crates. The reason for doing this is, some structs in third party libraries cannot be cloned or serialized, and thus cannot be sent to the frontend.
 

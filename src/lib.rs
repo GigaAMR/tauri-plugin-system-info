@@ -5,14 +5,14 @@ use tauri::{
 
 use std::{collections::HashMap, sync::Mutex};
 
-mod commands;
+pub mod commands;
 #[cfg(desktop)]
 mod desktop;
 mod error;
 #[cfg(mobile)]
 mod mobile;
-mod model;
-mod utils;
+pub mod model;
+pub mod utils;
 
 pub use error::{Error, Result};
 
